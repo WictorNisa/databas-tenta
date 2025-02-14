@@ -1,6 +1,6 @@
 import express from 'express'
 import { Router } from 'express'
-import { getAllProducts, getProductById, getProductsByName, getCategoryById } from '../controllers/productsController'
+import { getAllProducts, getProductById, getProductsByName, getCategoryById, postNewProduct, updateProduct } from '../controllers/productsController'
 
 const router = Router()
 
@@ -19,6 +19,12 @@ router.get('/:id', getProductById)
 router.get('/category/:categoryId', getCategoryById)
 
 
+//Create a new product
+router.post('/', postNewProduct)
+
+
+//Update a existing product
+router.put('/:id', updateProduct)
 
 
 export default router;
