@@ -1,6 +1,6 @@
 import express from 'express'
 import { Router } from 'express'
-import { getAllProducts, getProductById, getProductsByName, getCategoryById, postNewProduct, updateProduct } from '../controllers/productsController'
+import { getAllProducts, getProductById, getProductsByName, getCategoryById, postNewProduct, updateProduct, deleteProduct } from '../controllers/productsController'
 
 const router = Router()
 
@@ -9,7 +9,7 @@ const router = Router()
 router.get('/', getAllProducts)
 
 //GET products based on a search term
-router.get('/search', getProductsByName )
+router.get('/search', getProductsByName)
 
 
 //GET a specific product based on ID
@@ -25,6 +25,10 @@ router.post('/', postNewProduct)
 
 //Update a existing product
 router.put('/:id', updateProduct)
+
+
+//Update a existing product
+router.delete('/:id', deleteProduct)
 
 
 export default router;

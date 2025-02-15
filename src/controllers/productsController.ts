@@ -228,3 +228,34 @@ export const updateProduct = (req: Request, res: Response, next: NextFunction) =
 
 // @DELETE a existing product on the database
 // @route //products/:id
+
+export const deleteProduct = (req: Request, res: Response, next: NextFunction) => {
+    try {
+        //Parse id into an integer
+        const id = parseInt(req.params.id, 10);
+
+        //Validate input
+        if (!Number.isInteger(id) || id <= 0) {
+            throw new Error("Invalid ID formatting");
+        }
+
+        const stmt = db.prepare(`DELETE FROM products WHERE id = ?`)
+        const result = stmt.run(id)
+
+
+        //Send back success response to the client
+        res.status(201).json({
+            msg: 'Removed product successfully'
+
+        })
+        //Log the result of the operation to the console
+        console.log(result)
+    } catch (error) {
+        //Type the error as Error 
+        const err = error as Error;
+        console.error(`Error deleting product:${err}`);
+        res
+            .status(500)
+            .json({ error: "Internal Server Error", details: err.message });
+    }
+}
