@@ -7,7 +7,6 @@ import { Request, Response, NextFunction } from 'express'
 
 export const getCustomerById = (req: Request, res: Response, next: NextFunction) => {
     try {
-
         //Parse id into an integer
         const id = parseInt(req.params.id, 10);
 
@@ -15,9 +14,6 @@ export const getCustomerById = (req: Request, res: Response, next: NextFunction)
         if (!Number.isInteger(id) || id <= 0) {
             throw new Error("Invalid ID formatting");
         }
-
-
-
         const stmt = db.prepare(`
             SELECT customers.name AS Customer_Name, customers.email AS Customer_Email, customers.phone AS
             Customer_Phone, customers.delivery_adress AS Customer_Delivery_Adress,
@@ -26,10 +22,8 @@ export const getCustomerById = (req: Request, res: Response, next: NextFunction)
             FROM customers
             JOIN orders ON orders.customer_id = customers.id
             WHERE customers.id = ?
-           
-            `)
+           `)
         const customer = stmt.all(id)
-
 
         //Check if there is a customer with the provided id
         if (!customer) {
@@ -38,7 +32,7 @@ export const getCustomerById = (req: Request, res: Response, next: NextFunction)
             }); console.log(`No customer found with the id of ${id}`)
         }
         //Send back data to client
-        res.json(customer)
+        res.status(201).json(customer)
         console.log(customer)
 
     } catch (error) {
@@ -66,13 +60,11 @@ export const updateCustomerById = (req: Request, res: Response, next: NextFuncti
         }
 
         //Destructure the required fields from req.body
-
         const {
             name,
             email,
             phone,
         } = req.body
-
 
         //Validate that all required fields are present
         if (!name || !email || !phone) {
@@ -138,7 +130,7 @@ export const getAllOrdersFromCustomerById = (req: Request, res: Response, next: 
             return;
         }
         //Send back the products object as JSON to the client
-        res.json(customer);
+        res.status(201).json(customer);
         console.log(customer)
     } catch (error) {
         //Type the error as Error 

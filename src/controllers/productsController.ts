@@ -18,7 +18,7 @@ export const getAllProducts = (req: Request, res: Response, next: NextFunction) 
         const products = stmt.all();
         console.log(products);
         //Send back the products object as JSON to the client
-        res.json(products);
+        res.status(201).json(products);
     } catch (error) {
         //Type the error as Error 
         const err = error as Error;
@@ -50,7 +50,7 @@ export const getProductById = (req: Request, res: Response, next: NextFunction) 
             return;
         }
         //Send back the products object as JSON to the client
-        res.json(product);
+        res.status(201).json(product);
     } catch (error) {
         //Type the error as Error 
         const err = error as Error;
@@ -79,7 +79,7 @@ export const getProductsByName = (req: Request, res: Response, next: NextFunctio
         }
 
         //Send back the products object as JSON to the client
-        res.json(products);
+        res.status(201).json(products);
     } catch (error) {
         //Type the error as Error 
         const err = error as Error;
@@ -116,7 +116,7 @@ export const getCategoryById = (req: Request, res: Response, next: NextFunction)
 
         //Send data to the client
         console.log(products)
-        res.json(products);
+        res.status(201).json(products);
     } catch (error) {
         //Type the error as Error 
         const err = error as Error;
@@ -254,6 +254,34 @@ export const deleteProduct = (req: Request, res: Response, next: NextFunction) =
         //Type the error as Error 
         const err = error as Error;
         console.error(`Error deleting product:${err}`);
+        res
+            .status(500)
+            .json({ error: "Internal Server Error", details: err.message });
+    }
+}
+
+// @GET data analytics grouped by categories
+// @route /products/stats
+export const getDataAboutProduct = (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const stmt = db.prepare(`
+        SELECT 
+            categories.name AS Category_Name, 
+            COUNT(products.id) AS Product_Count, 
+            AVG(products.price) AS Avg_Price
+        FROM products
+        JOIN categories ON products.category_id = categories.id
+        GROUP BY categories.name;
+            `)
+
+        const products = stmt.all();
+        console.log(products);
+        //Send back the products object as JSON to the client
+        res.status(201).json(products);
+    } catch (error) {
+        //Type the error as Error 
+        const err = error as Error;
+        console.error(`Error getting data about products:${err}`);
         res
             .status(500)
             .json({ error: "Internal Server Error", details: err.message });
