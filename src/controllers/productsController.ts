@@ -2,20 +2,52 @@ import db from "../db";
 import { Request, Response, NextFunction } from 'express'
 
 
+//Define a type for the product
+interface Product {
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    stock: number,
+    category_id: number,
+    manufactor_id: number
+}
+
+
+
 // @desc //GET all products, categories -and manufacturer details for each product
 // @route /products
-export const getAllProducts = (req: Request, res: Response, next: NextFunction) => {
+export const getAllProducts = (req: Request, res: Response, next: NextFunction): void => {
+
     try {
-        const stmt = db.prepare(
-            `
-          SELECT products.name AS Product_Name, categories.name AS Category, manufactors.name AS
+        let query = `
+        SELECT products.name AS Product_Name, categories.name AS Category, manufactors.name AS
           Manufacturer_Name
           FROM products
           JOIN categories ON products.category_id = categories.id
           JOIN manufactors ON products.manufactor_id = manufactors.id
-          `
-        );
-        const products = stmt.all();
+        `;
+
+        const conditions = [];
+        const params = [];
+
+        if (req.query.minPrice) {
+            conditions.push('products.price >= ? ')
+            params.push(req.query.minPrice)
+        }
+
+        if (req.query.maxPrice) {
+            conditions.push('products.price <= ?')
+            params.push(req.query.maxPrice)
+        }
+
+        if (conditions.length > 0) {
+            query += ' WHERE ' + conditions.join(' AND ')
+        }
+
+
+        const stmt = db.prepare(query);
+        const products = stmt.all(params);
         console.log(products);
         //Send back the products object as JSON to the client
         res.status(201).json(products);
@@ -31,17 +63,19 @@ export const getAllProducts = (req: Request, res: Response, next: NextFunction) 
 
 // @desc GET a specific product based on ID
 // @route /products/:id
-export const getProductById = (req: Request, res: Response, next: NextFunction) => {
+export const getProductById = (req: Request, res: Response, next: NextFunction): void => {
     try {
         //Parse id into an integer
-        const id = parseInt(req.params.id, 10);
+        const id = Number(req.params.id);
 
         //Validate input
         if (!Number.isInteger(id) || id <= 0) {
-            throw new Error("Invalid ID formatting");
+            res.status(400).json({ error: "Invalid product ID format" });
+            return;
         }
+        //Pepare and execute query
         const stmnt = db.prepare("SELECT * FROM products WHERE id = ?");
-        const product = stmnt.get(id);
+        const product = stmnt.get(id) as Product | undefined;
 
         //Check if the product is found
         if (!product) {
@@ -133,7 +167,7 @@ export const postNewProduct = (req: Request, res: Response, next: NextFunction) 
     try {
 
         //Destructure the required fields from req.body
-        const {
+        let {
             name,
             description,
             price,
@@ -143,10 +177,21 @@ export const postNewProduct = (req: Request, res: Response, next: NextFunction) 
         } = req.body
 
 
+        //Parse price into an integer
+        price = parseInt(price)
+
+
         //Validate that all required fields are present
         if (!name || !description || !price || !stock || !category_id || !manufactor_id) {
             res.status(400).json({
                 error: 'Missing required fields'
+            })
+        }
+
+        //Validate that price is bigger than 0
+        if (price <= 0) {
+            res.status(400).json({
+                error: 'Price must be bigger than 0'
             })
         }
 
@@ -188,16 +233,24 @@ export const updateProduct = (req: Request, res: Response, next: NextFunction) =
         }
 
         //Destructure the required fields from req.body
-        const {
+        let {
             price,
             stock,
         } = req.body
 
-
+        //Parse price into an integer
+        price = parseInt(price)
         //Validate that all required fields are present
         if (!price || !stock) {
             res.status(400).json({
                 error: 'Missing required fields'
+            })
+        }
+
+        //Validate that price is bigger than 0
+        if (price <= 0) {
+            res.status(400).json({
+                error: 'Price must be bigger than 0'
             })
         }
 
@@ -238,6 +291,7 @@ export const deleteProduct = (req: Request, res: Response, next: NextFunction) =
         if (!Number.isInteger(id) || id <= 0) {
             throw new Error("Invalid ID formatting");
         }
+        
 
         const stmt = db.prepare(`DELETE FROM products WHERE id = ?`)
         const result = stmt.run(id)
