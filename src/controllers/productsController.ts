@@ -176,7 +176,7 @@ export const postNewProduct = (req: Request, res: Response, next: NextFunction) 
 }
 
 // @PUT a existing product on the database
-// @route //products/:id
+// @route /products/:id
 export const updateProduct = (req: Request, res: Response, next: NextFunction) => {
     try {
         //Parse id into an integer
@@ -259,3 +259,4 @@ export const deleteProduct = (req: Request, res: Response, next: NextFunction) =
             .json({ error: "Internal Server Error", details: err.message });
     }
 }
+
