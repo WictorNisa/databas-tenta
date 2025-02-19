@@ -22,7 +22,7 @@ export const getAllProducts = (req: Request, res: Response, next: NextFunction):
     try {
         let query = `
         SELECT products.name AS Product_Name, categories.name AS Category, manufactors.name AS
-          Manufacturer_Name
+          Manufacturer_Name, products.image_path AS Img, products.price AS Price
           FROM products
           JOIN categories ON products.category_id = categories.id
           JOIN manufactors ON products.manufactor_id = manufactors.id

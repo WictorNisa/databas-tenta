@@ -1,0 +1,44 @@
+.productsContainerWp {
+  height: auto;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -80px;
+}
+
+.productsHeroContainer {
+  background-color: azure;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heroTextContainer {
+  background-color: aqua;
+  width: 50%;
+  height: 60%;
+  margin: auto auto auto 2rem;
+}
+
+.heroImgContainer {
+  background-color: red;
+  width: 50%;
+  height: 60%;
+  margin: auto 2rem auto auto;
+}
+
+.heroImgContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.formButtonContainer {
+  background-color: aqua;
+  width: 50vw;
+  height: 10vh;
+}

@@ -1,4 +1,6 @@
 import express from 'express'
+import { Request } from "express";
+import cors from "cors";
 import logger from './middleware/logger';
 import productsRouter from "./routes/products";
 import customersRouter from './routes/customers'
@@ -7,6 +9,7 @@ const app = express()
 
 
 //Body parser middleware
+app.use(cors<Request>())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger);
