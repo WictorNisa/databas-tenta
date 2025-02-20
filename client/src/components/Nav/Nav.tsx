@@ -6,7 +6,7 @@ const Nav = () => {
     <nav className={styles.nav}>
       <div className={styles.logoContainer}>
         <Link to="/">
-          <h1>CT</h1>
+          <h1>TG</h1>
         </Link>
       </div>
       <ul className={styles.navList}>

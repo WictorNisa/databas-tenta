@@ -1,0 +1,20 @@
+.cardContainer {
+  background-color: black;
+  height: 30%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cardContainer h1 {
+  font-family: "Montserrat", serif;
+  text-transform: uppercase;
+  color: white;
+  font-size: 2.5rem;
+  text-align: center;
+  letter-spacing: 2px;
+  font-size: 1rem;
+}

@@ -1,17 +1,45 @@
 import ProductCard from "../ProductCard/ProductCard";
 import styles from "./ProductDisplay.module.css";
-import { use, Suspense } from "react";
-import { productsPromise } from "../../services/Api";
+import { useEffect, useState } from "react";
+import {
+  fetchAllProducts,
+  fetchCategoryById,
+  productsPromise,
+} from "../../services/Api";
+import CategoriesDisplay from "../CategoriesDisplay/CategoriesDisplay";
 
-const ProductsDisplay = () => {
-  const products = use(productsPromise)
+const ProductsDisplay = ({
+  selectedCategoryId,
+  setSelectedCategoryId,
+  categories,
+}) => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      const data = selectedCategoryId
+        ? await fetchCategoryById(selectedCategoryId)
+        : await fetchAllProducts();
+      setProducts(data);
+      setLoading(false);
+    };
+    fetchProducts();
+  }, [selectedCategoryId]);
+
+  if (loading) return <h2>Loading...</h2>;
+
   return (
     <section className={styles.productDisplayContainer}>
-      <Suspense fallback={<h2>Loading...</h2>}>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product}/>
-      ))}
-      </Suspense>
+      <CategoriesDisplay
+        categories={categories}
+        selectedCategoryId={selectedCategoryId}
+        setSelectedCategoryId={setSelectedCategoryId}
+      />
+      {products &&
+        products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
     </section>
   );
 };

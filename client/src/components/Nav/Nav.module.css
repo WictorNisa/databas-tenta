@@ -19,6 +19,13 @@
   font-family: "Bazer", sans-serif;
 }
 
+.logoContainer a {
+  text-decoration: none;
+  letter-spacing: 2px;
+  font-size: 1.5rem;
+  color: black;
+}
+
 .navList {
   width: 40%;
   height: 100%;
@@ -29,5 +36,12 @@
   margin: auto;
   list-style: none;
   font-family: "Montserrat", serif;
+}
+
+.navItem a {
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: black;
 }
 

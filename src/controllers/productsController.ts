@@ -21,8 +21,8 @@ export const getAllProducts = (req: Request, res: Response, next: NextFunction):
 
     try {
         let query = `
-        SELECT products.name AS Product_Name, categories.name AS Category, manufactors.name AS
-          Manufacturer_Name, products.image_path AS Img, products.price AS Price
+        SELECT products.name AS Product_Name, categories.name AS Category, categories.id AS Category_id, manufactors.name AS
+          Manufacturer_Name, products.image_path AS Img, products.price AS Price, products.description AS Description
           FROM products
           JOIN categories ON products.category_id = categories.id
           JOIN manufactors ON products.manufactor_id = manufactors.id
@@ -135,7 +135,7 @@ export const getCategoryById = (req: Request, res: Response, next: NextFunction)
             throw new Error("Invalid ID formatting");
         }
 
-        const stmnt = db.prepare(`SELECT products.name AS Product_name, categories.name AS category 
+        const stmnt = db.prepare(`SELECT products.name AS Product_Name, categories.name AS Category, products.image_path AS Img
             FROM products
             JOIN categories ON products.category_id = categories.id
             WHERE categories.id = ?`);
@@ -291,7 +291,7 @@ export const deleteProduct = (req: Request, res: Response, next: NextFunction) =
         if (!Number.isInteger(id) || id <= 0) {
             throw new Error("Invalid ID formatting");
         }
-        
+
 
         const stmt = db.prepare(`DELETE FROM products WHERE id = ?`)
         const result = stmt.run(id)

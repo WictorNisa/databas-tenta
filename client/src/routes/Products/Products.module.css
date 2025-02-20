@@ -9,7 +9,7 @@
 }
 
 .productsHeroContainer {
-  background-color: azure;
+  
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -18,27 +18,53 @@
 }
 
 .heroTextContainer {
-  background-color: aqua;
   width: 50%;
-  height: 60%;
+  height: 70%;
   margin: auto auto auto 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Montserrat", serif;
+}
+
+.heroTextContainer h1 {
+  font-size: 3rem;
+  letter-spacing: 3px;
+}
+
+.heroTextContainer p {
+  font-size: 1.5rem;
+}
+
+.heroTextContainer span {
+  margin-top: 2rem;
+  font-size: 1.2rem;
 }
 
 .heroImgContainer {
-  background-color: red;
   width: 50%;
-  height: 60%;
+  height: 70%;
   margin: auto 2rem auto auto;
 }
 
 .heroImgContainer img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.formButtonContainer {
-  background-color: aqua;
-  width: 50vw;
-  height: 10vh;
+.productsCategoryContainer {
+  background-color: green;
+  height: 50vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.categoryContainerInner{
+    background-color: aquamarine;
+    width: 80%;
+    height: 100%;
 }

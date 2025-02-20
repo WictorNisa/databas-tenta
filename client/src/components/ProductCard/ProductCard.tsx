@@ -1,9 +1,18 @@
+import { useState } from "react";
+import ProductDetails from "../ProductDetails/ProductDetails";
 import styles from "./ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
-  console.log(product);
-  return (
-    <div className={styles.productCard}>
+  const [modal, setModal] = useState(false);
+
+  const handleOnClick = () => {
+    setModal((prev) => !prev);
+  };
+  // console.log(products);
+  return modal ? (
+    <ProductDetails handleOnClick={handleOnClick} product={product}/>
+  ) : (
+    <div className={styles.productCard} onClick={handleOnClick}>
       <div className={styles.cardImgContainer}>
         <img src={product.Img} alt={product.Product_Name} />
       </div>
