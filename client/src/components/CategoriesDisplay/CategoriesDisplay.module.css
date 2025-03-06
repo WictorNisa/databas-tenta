@@ -7,6 +7,12 @@
   align-items: center;
 }
 
+.displayContainerHeader {
+  font-family: "Bazer", sans-serif;
+  font-size: 10vh;
+  letter-spacing: 10px;
+}
+
 .displayContainerInner {
   width: 100%;
   height: 80%;

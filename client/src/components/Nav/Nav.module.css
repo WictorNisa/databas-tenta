@@ -45,3 +45,26 @@
   color: black;
 }
 
+.navProfileContainer {
+  height: 100%;
+  width: 25%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.navProfileContainer p {
+  font-family: "Montserrat", serif;
+}
+
+.navProfileContainer span {
+  color: red;
+}
+
+.navProfileContainer a {
+  text-decoration: none;
+  font-family: "Montserrat", serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: black;
+}

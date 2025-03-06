@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {
   fetchAllProducts,
   fetchCategoryById,
-  productsPromise,
+  
 } from "../../services/Api";
 import CategoriesDisplay from "../CategoriesDisplay/CategoriesDisplay";
 
@@ -36,6 +36,7 @@ const ProductsDisplay = ({
         selectedCategoryId={selectedCategoryId}
         setSelectedCategoryId={setSelectedCategoryId}
       />
+     
       {products &&
         products.map((product) => (
           <ProductCard key={product.id} product={product} />

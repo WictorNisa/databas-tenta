@@ -3,6 +3,11 @@
   width: 20%;
   height: 400px;
   border: 1px solid black;
+  /* Box Shadow CSS */
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .cardImgContainer {
@@ -30,4 +35,14 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
+  font-family: "Montserrat", serif;
+}
+
+.cardTextContainer h5 {
+  font-size: 1.1rem;
+  font-weight: normal;
+}
+
+.cardTextContainer p {
+  font-weight: bolder;
 }

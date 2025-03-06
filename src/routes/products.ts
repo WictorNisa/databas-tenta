@@ -1,7 +1,8 @@
 import express from 'express'
 import { Router } from 'express'
-import { getAllProducts, getProductById, getProductsByName, getCategoryById, postNewProduct, updateProduct, deleteProduct,getDataAboutProduct     } from '../controllers/productsController'
+import { getAllProducts, getProductById, getProductsByName, getCategoryById, postNewProduct, updateProduct, deleteProduct, getDataAboutProduct } from '../controllers/productsController'
 
+//Initalize router as router from express
 const router = Router()
 
 //GET all products, categories -and manufacturer details for each product

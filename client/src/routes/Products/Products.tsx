@@ -1,8 +1,8 @@
 import styles from "./Products.module.css";
 import ProductsDisplay from "../../components/ProductsDisplay/ProductsDisplay";
 import { useEffect, useState } from "react";
-import { fetchAllProducts, productsPromise } from "../../services/Api";
-import CategoriesDisplay from "../../components/CategoriesDisplay/CategoriesDisplay";
+import { fetchAllProducts } from "../../services/Api";
+import Carousel from "../../components/Carousel/Carousel";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -56,7 +56,7 @@ const Products = () => {
             <>
               <h1>{randomProduct.Product_Name}</h1>
               <p>{randomProduct.Description}</p>
-              <span>Price €{randomProduct.Price}</span>
+              <span>Price ${randomProduct.Price}</span>
             </>
           )}
         </div>
@@ -66,17 +66,12 @@ const Products = () => {
           )}
         </div>
       </div>
-
-      {/* <div className={styles.productsCategoryContainer}>
-        <CategoriesDisplay
-          categories={categories}
-          selectedCategoryId={selectedCategoryId}
-          setSelectedCategoryId={setSelectedCategoryId}
-        />
-      </div> */}
-      <ProductsDisplay categories={categories}
-          selectedCategoryId={selectedCategoryId}
-          setSelectedCategoryId={setSelectedCategoryId} />
+      <Carousel />
+      <ProductsDisplay
+        categories={categories}
+        selectedCategoryId={selectedCategoryId}
+        setSelectedCategoryId={setSelectedCategoryId}
+      />
     </section>
   );
 };

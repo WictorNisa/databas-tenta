@@ -7,11 +7,23 @@ const CategoriesDisplay = ({
   selectedCategoryId,
   setSelectedCategoryId,
 }) => {
-  console.log(categories);
+
+  
+
   return (
     <div className={styles.displayContainer}>
-      <div onClick={() => setSelectedCategoryId(null)} className={styles.displayAllDiv}><h3>Show all</h3></div>
+      <h1 className={styles.displayContainerHeader}>Categories</h1>
+      <form>
+        <input type="text" placeholder="Search by name" />
+        <button type="submit">Search</button>
+      </form>
       <div className={styles.displayContainerInner}>
+        <div
+          onClick={() => setSelectedCategoryId(null)}
+          className={styles.displayAllDiv}
+        >
+          <h3>Show all</h3>
+        </div>
         {categories.map((category) => (
           <CategoryCard
             category={category}

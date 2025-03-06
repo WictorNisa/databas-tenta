@@ -1,0 +1,30 @@
+.carouselContainer {
+  width: 100vw;
+  height: 10vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  white-space: nowrap;
+  background-color: black;
+}
+
+.carouselTrack {
+  display: flex;
+  width: max-content;
+  
+}
+
+.carouselItem {
+  min-width: 800px; /* Adjust size as needed */
+}
+
+.carouselItem p {
+ color: white;
+ font-family: "Montserrat", serif;
+ text-transform: uppercase;
+ font-weight: bold;
+ font-size: 1rem;
+ width: 100%;
+ min-width: 300px;
+}

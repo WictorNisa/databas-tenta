@@ -1,10 +1,12 @@
 .productDisplayContainer{
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     width: 100vw;
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
     justify-content: center;
     align-items: center;
-    
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }

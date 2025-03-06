@@ -3,26 +3,39 @@ import ProductDetails from "../ProductDetails/ProductDetails";
 import styles from "./ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
-  const [modal, setModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOnClick = () => {
-    setModal((prev) => !prev);
+  const openModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsModalOpen(true);
   };
+
+  const closeModal = (e?: React.MouseEvent) => {
+    e?.stopPropagation()
+    setIsModalOpen(false)
+  }
   // console.log(products);
-  return modal ? (
-    <ProductDetails handleOnClick={handleOnClick} product={product}/>
-  ) : (
-    <div className={styles.productCard} onClick={handleOnClick}>
+  return (
+    <>
+    <div className={styles.productCard} onClick={openModal}>
       <div className={styles.cardImgContainer}>
         <img src={product.Img} alt={product.Product_Name} />
       </div>
       <div className={styles.cardTextContainer}>
         <h5>{product.Product_Name}</h5>
-        <p>{product.Category}</p>
-        <p>{product.Manufacturer_Name}</p>
-        <p>Price: ${product.Price}</p>
+        <p>$ {product.Price}</p>
       </div>
     </div>
+
+    {isModalOpen && (
+      <div className={styles.modalOverlay}>
+        <ProductDetails 
+          product={product} 
+          onClose={closeModal} 
+        />
+      </div>
+    )}
+  </>
   );
 };
 

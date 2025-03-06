@@ -2,7 +2,7 @@ import db from "../db";
 import { Request, Response, NextFunction } from 'express'
 
 
-//Define a type for the product
+//Define interface for product
 interface Product {
     id: number,
     name: string,
@@ -10,7 +10,32 @@ interface Product {
     price: number,
     stock: number,
     category_id: number,
-    manufactor_id: number
+    manufactor_id: number,
+    image_path?: string
+}
+
+//Define interface for API responses
+
+interface ProductResponse {
+    Product_Name: string,
+    Category: string,
+    Category_id: number,
+    Manufacturer_Name: string,
+    Img: string,
+    Price: number,
+    Description: string
+}
+
+//For request queries
+interface ProductFilters {
+    minPrice?: string,
+    maxPrice?: string
+}
+
+//For API errors
+interface ApiError {
+    error: string,
+    details: string
 }
 
 
@@ -27,18 +52,19 @@ export const getAllProducts = (req: Request, res: Response, next: NextFunction):
           JOIN categories ON products.category_id = categories.id
           JOIN manufactors ON products.manufactor_id = manufactors.id
         `;
-
+        //Create two empty arrays that will be filled with values based on if there is a request params or not
         const conditions = [];
         const params = [];
 
+        //Check if there is parameters on the request and if there is push them to the arrays
         if (req.query.minPrice) {
             conditions.push('products.price >= ? ')
-            params.push(req.query.minPrice)
+            params.push(Number(req.query.minPrice))
         }
 
         if (req.query.maxPrice) {
             conditions.push('products.price <= ?')
-            params.push(req.query.maxPrice)
+            params.push(Number(req.query.maxPrice))
         }
 
         if (conditions.length > 0) {
@@ -49,6 +75,7 @@ export const getAllProducts = (req: Request, res: Response, next: NextFunction):
         const stmt = db.prepare(query);
         const products = stmt.all(params);
         console.log(products);
+
         //Send back the products object as JSON to the client
         res.status(201).json(products);
     } catch (error) {
@@ -96,16 +123,17 @@ export const getProductById = (req: Request, res: Response, next: NextFunction):
 }
 // @GET all products that contain the name query
 // @route /products/search?name=:name
-
 export const getProductsByName = (req: Request, res: Response, next: NextFunction) => {
 
     try {
+        // Save the value of the parameter on the request in a variable
         const searchTerm = `%${req.query.name}%`;
         console.log('Request query:', req.query);
 
         const stmt = db.prepare('SELECT * FROM products WHERE name LIKE ? ')
         const products = stmt.all(searchTerm)
 
+        //Check if there is a array with products that match the name that the user requested
         if (products.length === 0) {
             res.json({ Msg: `No products where found with the name of ${searchTerm}` });
             console.log(`No products where found with name of ${searchTerm}`);
@@ -135,7 +163,8 @@ export const getCategoryById = (req: Request, res: Response, next: NextFunction)
             throw new Error("Invalid ID formatting");
         }
 
-        const stmnt = db.prepare(`SELECT products.name AS Product_Name, categories.name AS Category, products.image_path AS Img
+        const stmnt = db.prepare(`SELECT products.name AS Product_Name, categories.name AS Category, products.image_path AS Img, 
+            products.price AS Price
             FROM products
             JOIN categories ON products.category_id = categories.id
             WHERE categories.id = ?`);

@@ -1,0 +1,9 @@
+.signUpFormContainer {
+  background-color: aliceblue;
+  height: 70%;
+  width: 60%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}

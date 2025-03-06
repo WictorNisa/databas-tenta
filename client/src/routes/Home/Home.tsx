@@ -27,7 +27,6 @@ export default Home;
 // Things to do Wednesday 20 Feb
 
 // Create a moredetails component so the user can see more details about a product when clicked
-// Figure out how I want to implement the category fetch and display products functionality
 // Add component or section for the user to post, update and delete a product
 
 //If there is time over start working on the customer page
